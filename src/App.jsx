@@ -1,15 +1,14 @@
 // import { useState } from 'react'
 // import LoginBox from './components/LoginBox.jsx'
-import SideBar from './components/SideBar.jsx'
-import './App.css'
+import { NavBar } from "./components/NavBar.jsx";
+import "./App.css";
 
 function App() {
-
   return (
     <div>
-      <SideBar />
+      <NavBar />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
