@@ -11,7 +11,7 @@ function LoginBox() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center  ">
       <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-sm">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
           Login
@@ -27,7 +27,7 @@ function LoginBox() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+              className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none"
               placeholder="Digite seu email"
               required
             />
@@ -42,7 +42,7 @@ function LoginBox() {
               type="password"
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+              className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none"
               placeholder="Digite sua senha"
               required
             />
@@ -51,7 +51,7 @@ function LoginBox() {
           {/* Botão de Login */}
           <button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl font-semibold shadow-md transition duration-300"
+            className="w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-xl font-semibold shadow-md transition duration-300"
           >
             Entrar
           </button>
@@ -62,7 +62,7 @@ function LoginBox() {
           Não tem uma conta?{" "}
           <a
             href="#"
-            className="text-blue-600 hover:text-blue-800 font-medium"
+            className="text-red-600 hover:text-red-800 font-medium"
           >
             Cadastre-se
           </a>
