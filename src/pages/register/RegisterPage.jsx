@@ -1,5 +1,5 @@
 import RegisterBox from "../../components/RegisterBox.jsx";
-import fundo from "../assets/bg-loja.jpg";
+import fundo from "../../assets/bg-loja.jpg";
 import TopBar from "../../components/TopBar.jsx";
 import MainHeader from "../../components/MainHeader.jsx";
 import { NavBar } from "../../components/NavBar.jsx";
