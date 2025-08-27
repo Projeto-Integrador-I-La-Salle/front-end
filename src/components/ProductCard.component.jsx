@@ -4,19 +4,20 @@ import BagNoneIcon from '../assets/icons/icon-bag-none.svg'
 import FavoriteDefaultIcon from '../assets/icons/icon-favorite-default.svg'
 import { useState } from 'react';
 
-export function ProductCard() {
+export function ProductCard({ size = 4 }) {
   const [isHovering, setIsHovering] = useState(false);
   const hasDiscount = false;
   const hasStars = false;
 
   return (
-    <div className='border h-[250px] w-[200px] flex flex-col items-center justify-between p-2
+    <div className={`border h-[250px] w-[200px] flex flex-col items-center justify-between p-2
                     shadow-md
                     transition-colors duration-300 ease-in-out
                     hover:border-[#8E1616]
                     hover:shadow-xl
                     relative
-      '
+                    ${size === 4 && 'rounded-lg'}
+      `}
       onMouseEnter={function() {
         setIsHovering(true);
       }}
