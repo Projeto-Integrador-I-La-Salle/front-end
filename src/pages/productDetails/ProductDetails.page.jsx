@@ -27,7 +27,9 @@ export function ProductDetailsPage() {
     };
 
     const productMock = {
-        hasDiscount: true
+        hasDiscount: true,
+        category: 'Acessórios',
+        tags: ['proteção', 'segurança']
     }
 
     return (
@@ -110,8 +112,8 @@ function ProductInfo({ product }) {
     const hasSKU = false;
 
     return (
-        <div className="w-[50%]">
-            <div className="flex gap-2 items-center">
+        <div className="w-[50%] select-none">
+            <div className="flex gap-2 items-center mb-5">
                 <TypographyHeading variation={4} weight={600}>Capacete</TypographyHeading>
                 <StockStatus hasStock={true} />
             </div>
@@ -160,6 +162,42 @@ function ProductInfo({ product }) {
                 <AddToFavoriteButton handleSubmit={function() { }} />
             </div>
             <SectionIntersection />
+            <div> {/* Category & Tags */}
+                <div className="flex gap-1 mb-3">
+                    <TypographyBody weight={500}>
+                        <TypographyBody.Small>
+                            Categoria:
+                        </TypographyBody.Small>
+                    </TypographyBody>
+                    <TypographyBody className="text-gray-500">
+                        <TypographyBody.Small>
+                            {product?.category}
+                        </TypographyBody.Small>
+                    </TypographyBody>
+                </div>
+                <div className="flex gap-1">
+                    {product?.tags?.length > 0 &&
+                        <div className="flex gap-1">
+                            <TypographyBody weight={500} className="text-black">
+                                <TypographyBody.Small>
+                                    Tag:
+                                </TypographyBody.Small>
+                            </TypographyBody>
+                            <div className="flex gap-1">
+                                {product?.tags.map(function(tag, idx) {
+                                    return (
+                                        <TypographyBody key={idx} className="text-gray-500">
+                                            <TypographyBody.Small>
+                                                {tag}
+                                            </TypographyBody.Small>
+                                        </TypographyBody>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
     );
 }
