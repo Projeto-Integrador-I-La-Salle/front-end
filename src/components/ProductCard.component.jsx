@@ -10,7 +10,9 @@ export function ProductCard({ size = 4 }) {
   const hasStars = false;
 
   return (
-    <div className={`border h-[250px] w-[200px] flex flex-col items-center justify-between p-2
+    <a
+      href={`/produtos/1`}
+      className={`border h-[250px] w-[200px] flex flex-col items-center justify-between p-2
                     shadow-md
                     transition-colors duration-300 ease-in-out
                     hover:border-[#8E1616]
@@ -51,7 +53,7 @@ export function ProductCard({ size = 4 }) {
         </div>
         <img src={BagNoneIcon} className='w=[40px] h-[40px]' />
       </div>
-    </div >
+    </a>
   );
 }
 

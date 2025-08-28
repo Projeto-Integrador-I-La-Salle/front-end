@@ -21,6 +21,13 @@ export default {
           200: "#cccccc",
           100: "#e5e5e5",
           50: "#f2f2f2",
+        },
+        branding: {
+          "success-bright": "#84d187",
+          "success": "#00b207",
+          "success-dark": "#2c742f",
+          "warning": "#ff8a00",
+          "error": "#ea4b48"
         }
       }
     },
