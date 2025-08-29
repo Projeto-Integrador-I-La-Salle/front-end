@@ -4,6 +4,8 @@ import { ProductsPage } from "../pages/products/products.page";
 import { LoginPage } from "../pages/login/LoginPage";
 import { RegisterPage } from "../pages/register/RegisterPage.jsx";
 import { ProductDetailsPage } from "../pages/productDetails/ProductDetails.page.jsx";
+import { WishlistPage } from "../pages/wishelist/WishlistPage.jsx";
+import { ReserveListPage } from "../pages/reservations/ReserveListPage.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +31,14 @@ export const router = createBrowserRouter([
   {
     path: "/cadastro",
     Component: RegisterPage,
+  },
+  {
+    path: "/desejos",
+    Component: WishlistPage,
+  },
+  {
+    path: "/reservas",
+    Component: ReserveListPage,
   },
 ]);
 

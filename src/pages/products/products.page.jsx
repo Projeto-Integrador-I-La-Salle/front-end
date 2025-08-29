@@ -19,7 +19,7 @@ export function ProductsPage() {
             <TopBar />
             <MainHeader />
             <NavBar />
-            <section className="bg-[#1D1616] h-24 flex gap-2 items-center text-gray-600 px-[10%]">
+            <section className="bg-[#1D1616] h-24 flex gap-2 items-center text-gray-400 px-[10%]">
                 <img src={HomeIcon} />
                 <img src={RightArrowVectorIcon} />
                 <p className="">Categorias</p>
