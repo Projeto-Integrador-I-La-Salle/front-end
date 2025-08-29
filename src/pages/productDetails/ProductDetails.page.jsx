@@ -17,6 +17,7 @@ import { Quantity } from "../../components/Quantity.component";
 
 import iconShop from '../../assets/icons/icon-shop-vector.svg';
 import iconFavorite from '../../assets/icons/icon-heart-success-dark-vector.svg';
+import { ProductCard } from "../../components/ProductCard.component";
 
 export function ProductDetailsPage() {
     const { data } = useLoaderData();
@@ -32,6 +33,8 @@ export function ProductDetailsPage() {
         tags: ['proteção', 'segurança']
     }
 
+    const relatedProducts = new Array(4).fill(0);
+
     return (
         <div>
             <TopBar />
@@ -42,6 +45,18 @@ export function ProductDetailsPage() {
                     <section className="flex justify-between">
                         <ImageSection images={images} />
                         <ProductInfo product={productMock} />
+                    </section>
+                    <section className="flex flex-col items-center my-10">
+                        <TypographyHeading weight={600} variation={5}>
+                            Produtos Relacionados
+                        </TypographyHeading>
+                        <div className="flex justify-between my-10 gap-5">
+                            {relatedProducts?.length > 0 &&
+                                relatedProducts?.map(function(_, idx) {
+                                    return (<ProductCard key={idx} />);
+                                })
+                            }
+                        </div>
                     </section>
                 </div>
             </Container>
