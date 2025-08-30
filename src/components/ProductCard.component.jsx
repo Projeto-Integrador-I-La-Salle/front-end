@@ -1,17 +1,21 @@
 import imgLuva from '../assets/img-luva.webp';
 import { TypographyBody } from './typography/TypographyBody.component';
 import BagNoneIcon from '../assets/icons/icon-bag-none.svg'
-import FavoriteDefaultIcon from '../assets/icons/icon-favorite-default.svg'
+import FavoriteDefaultIcon from '../assets/icons/icon-heart-default-vector.svg'
+import FavoriteRedIcon from '../assets/icons/icon-heart-red-vector.svg'
 import { useState } from 'react';
+import { addItemToWishlist, getWishlistItemById, removeWishlistItemById } from '../services/storage';
 
 export function ProductCard({ size = 4 }) {
   const [isHovering, setIsHovering] = useState(false);
   const hasDiscount = false;
   const hasStars = false;
 
+  const mockUUID = "77c3cbcf-671e-4085-b8fe-ee8788cef0d6";
+
   return (
     <a
-      href={`/produtos/1`}
+      href={'#'}
       className={`border h-[250px] w-[200px] flex flex-col items-center justify-between p-2
                     shadow-md
                     transition-colors duration-300 ease-in-out
@@ -31,12 +35,7 @@ export function ProductCard({ size = 4 }) {
         <div>Desconto 50%</div>
       }
       {isHovering &&
-        <button className='absolute right-1 top-1 cursor-pointer'>
-          <img
-            src={FavoriteDefaultIcon}
-            className="w-[40px] h-[40px]"
-          />
-        </button>
+        <FavoriteButton productId={mockUUID} />
       }
       <img src={imgLuva} className='w-[70%]' />
       <div className='w-[100%] flex justify-between items-center'>
@@ -54,6 +53,33 @@ export function ProductCard({ size = 4 }) {
         <img src={BagNoneIcon} className='w=[40px] h-[40px]' />
       </div>
     </a>
+  );
+}
+
+function FavoriteButton({ productId }) {
+  const favorited = getWishlistItemById(productId);
+
+  const [isFavorited, setIsFavorited] = useState(favorited);
+
+  function handleFavoriteButtonClick() {
+    setIsFavorited(!isFavorited);
+
+    getWishlistItemById(productId)
+      ? removeWishlistItemById(productId)
+      : addItemToWishlist(productId);
+  }
+
+  return (
+    <button
+      onClick={handleFavoriteButtonClick}
+      className={`absolute right-1 top-1 cursor-pointer border rounded-full p-2 shadow
+                 ${!isFavorited && 'hover:bg-branding-error transition-colors duration-300 ease-in-out'}`}
+    >
+      <img
+        src={isFavorited ? FavoriteRedIcon : FavoriteDefaultIcon}
+        className="w-[20px] h-[20px]"
+      />
+    </button>
   );
 }
 
