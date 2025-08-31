@@ -1,13 +1,41 @@
 // src/components/LoginBox.jsx
 import { useState } from "react";
+import { login } from "../api/auth.api";
+import { setCookie } from "../services/cookies";
+import { redirect, useNavigate } from "react-router";
 
 function LoginBox() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log("Login com:", { email, senha });
+
+    setLoading(true);
+
+    const response = await login({ email: email, password: senha });
+    if (response.hasError) {
+      setError(response.data);
+      setLoading(false);
+      return;
+    }
+
+    if (response.statusCode === 422) {
+      setError(response.data);
+      setLoading(false);
+      return;
+    }
+
+    if (response.statusCode === 200) {
+      // XXX: show modal? response.data.message
+      setCookie("token", "Bearer " + response?.data?.access_token, 1);
+      setLoading(false);
+      setError("");
+      navigate("/");
+    }
   };
 
   return (
@@ -48,12 +76,20 @@ function LoginBox() {
             />
           </div>
 
+          {error.length > 0 && <p className="text-branding-error">{error}</p>}
+
           {/* Botão de Login */}
           <button
             type="submit"
-            className="w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-xl font-semibold shadow-md transition duration-300"
+            disabled={loading}
+            className="flex items-center justify-center gap-3 w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-xl font-semibold shadow-md transition duration-300"
           >
-            Entrar
+            <span>{loading ? "Carregando" : "Entrar"}</span>
+            {loading && (
+              <span
+                className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"
+              />
+            )}
           </button>
         </form>
 
