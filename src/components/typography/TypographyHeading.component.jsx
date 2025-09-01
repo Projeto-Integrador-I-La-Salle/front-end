@@ -18,10 +18,10 @@ export function TypographyHeading({ children, weight = 400, variation }) {
       return 'text-4xl';
     }
     if (variation === 4) {
-      return 'text-4xl';
+      return 'text-3xl';
     }
     if (variation === 5) {
-      return 'text-3xl';
+      return 'text-2xl';
     }
   }
 
