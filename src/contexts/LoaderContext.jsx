@@ -4,7 +4,7 @@ import { Loader } from "../components/Loader.component";
 export const LoaderContext = createContext();
 
 export function LoaderProvider({ children }) {
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     return (
         <LoaderContext.Provider value={{ isLoading, setIsLoading }}>
