@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Container } from "../../components/Container.component";
 import MainHeader from "../../components/MainHeader";
 import { NavBar } from "../../components/NavBar";
@@ -6,13 +7,14 @@ import TopBar from "../../components/TopBar";
 import HomeIcon from '../../assets/icons/icon-home.svg'
 import RightArrowVectorIcon from '../../assets/icons/icon-right-arrow-vector.svg'
 import { Paginator } from "../../components/Paginator.component";
+import { useGetAllProducts } from "../../hooks/getAllProducts.hook";
 
 export function ProductsPage() {
-    const items = new Array(30).fill(0)
+    const { products, getAll, aditionalInfo } = useGetAllProducts();
 
-    const data = {
-        totalItems: 56
-    }
+    useEffect(function() {
+        getAll();
+    }, []);
 
     return (
         <div>
@@ -32,16 +34,20 @@ export function ProductsPage() {
                     <div className="flex justify-between my-5">
                         Filtros horizontais
                         <div className="flex gap-1">
-                            <p className="text-gray-900 font-bold">{data.totalItems}</p>
+                            <p className="text-gray-900 font-bold">{aditionalInfo?.total}</p>
                             <p className="text-gray-600">Resultados Encontrados</p>
                         </div>
                     </div>
                     <div className="flex">
                         <div className="w-[15%]">Filtro Vertical</div>
                         <div className="w-[85%] flex flex-wrap gap-5 justify-center">
-                            {items?.map(function(_, idx) {
+                            {products?.map(function(product, idx) {
                                 return (
-                                    <ProductCard size={4} key={idx} />
+                                    <ProductCard
+                                        key={idx}
+                                        product={product}
+                                        size={4}
+                                    />
                                 );
                             })}
                             <Paginator />

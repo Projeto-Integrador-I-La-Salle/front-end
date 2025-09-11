@@ -4,16 +4,18 @@ import { RouterProvider } from "react-router/dom";
 import { router } from './routes/router';
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Modal } from './components/Modal.component';
 import { ModalProvider } from './contexts/ModalContext';
+import { LoaderProvider } from './contexts/LoaderContext';
 
 const root = document.getElementById("root");
 
 ReactDOM.createRoot(root).render(
   <StrictMode>
-    <ModalProvider>
-      <RouterProvider router={router} />
-    </ModalProvider>
+    <LoaderProvider>
+      <ModalProvider>
+        <RouterProvider router={router} />
+      </ModalProvider>
+    </LoaderProvider>
   </StrictMode>
 );
 

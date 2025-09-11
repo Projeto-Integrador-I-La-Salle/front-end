@@ -5,8 +5,12 @@ import FavoriteDefaultIcon from '../assets/icons/icon-heart-default-vector.svg'
 import FavoriteRedIcon from '../assets/icons/icon-heart-red-vector.svg'
 import { useState } from 'react';
 import { addItemToWishlist, getWishlistItemById, removeWishlistItemById } from '../services/storage';
+import '../types/global'
 
-export function ProductCard({ size = 4 }) {
+/**
+ * @param {{ product: ProductType, size?: number }} props
+ */
+export function ProductCard({ product, size = 4 }) {
   const [isHovering, setIsHovering] = useState(false);
   const hasDiscount = false;
   const hasStars = false;
@@ -37,14 +41,18 @@ export function ProductCard({ size = 4 }) {
       {isHovering &&
         <FavoriteButton productId={mockUUID} />
       }
-      <img src={imgLuva} className='w-[70%]' />
+      <img src={product.imagens[0].url_imagem || imgLuva} className='w-[70%] rounded-md' />
       <div className='w-[100%] flex justify-between items-center'>
         <div>
           <TypographyBody weight={400}>
-            <TypographyBody.Small>Luva Preta</TypographyBody.Small>
+            <TypographyBody.Small>
+              {product.nome}
+            </TypographyBody.Small>
           </TypographyBody>
           <TypographyBody weight={500}>
-            <TypographyBody.Medium>R$55,90</TypographyBody.Medium>
+            <TypographyBody.Medium>
+              R${product.preco.toString().replace('.', ',')}
+            </TypographyBody.Medium>
           </TypographyBody>
           {hasStars &&
             <div>estrelhinas</div>
