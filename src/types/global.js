@@ -1,7 +1,6 @@
 /**
  * @typedef ProductType
- * @property {string} idProduto
- * @property {number} idCategoria
+ * @property {string} id
  * @property {string} nome
  * @property {string} descricao
  * @property {number} preco
@@ -13,14 +12,14 @@
 
 /**
  * @typedef CategoryType
- * @property {number} idCategoria
+ * @property {number} id
  * @property {string} tipo
  */
 
 
 /**
  * @typedef ImageType
- * @property {number} idImagem
- * @property {string} urlImagem
+ * @property {number} id
+ * @property {string} url
  */
 

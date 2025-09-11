@@ -15,8 +15,6 @@ export function ProductCard({ product, size = 4 }) {
   const hasDiscount = false;
   const hasStars = false;
 
-  const mockUUID = "77c3cbcf-671e-4085-b8fe-ee8788cef0d6";
-
   return (
     <a
       href={'#'}
@@ -39,19 +37,19 @@ export function ProductCard({ product, size = 4 }) {
         <div>Desconto 50%</div>
       }
       {isHovering &&
-        <FavoriteButton productId={mockUUID} />
+        <FavoriteButton productId={product.id} />
       }
-      <img src={product.imagens[0].url_imagem || imgLuva} className='w-[70%] rounded-md' />
+      <img src={product?.imagens[0].url || imgLuva} className='w-[70%] rounded-md' />
       <div className='w-[100%] flex justify-between items-center'>
         <div>
           <TypographyBody weight={400}>
             <TypographyBody.Small>
-              {product.nome}
+              {product?.nome}
             </TypographyBody.Small>
           </TypographyBody>
           <TypographyBody weight={500}>
             <TypographyBody.Medium>
-              R${product.preco.toString().replace('.', ',')}
+              R${product?.preco.toString().replace('.', ',')}
             </TypographyBody.Medium>
           </TypographyBody>
           {hasStars &&

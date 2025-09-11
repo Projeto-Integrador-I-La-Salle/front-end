@@ -3,21 +3,23 @@ import { get } from "../api/products.api";
 import { LoaderContext } from "../contexts/LoaderContext";
 
 export function useGetAllProducts() {
-  const [products, setProducts] = useState();
+
+  /**
+   * @type {[Array<ProductType>, React.Dispatch<Array<ProductType>>]}
+   */
+  const [products, setProducts] = useState(new Array());
   const [aditionalInfo, setAditionalInfo] = useState();
   const { setIsLoading } = useContext(LoaderContext);
 
   async function getAll() {
     setIsLoading(true);
 
-    const response = await get();
-
     try {
+      const response = await get();
       setProducts(response.data?.data);
       setAditionalInfo(response.data);
     } catch (err) {
       console.error(err);
-      setIsLoading(false);
     } finally {
       setIsLoading(false);
     }

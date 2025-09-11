@@ -41,10 +41,10 @@ export function ProductsPage() {
                     <div className="flex">
                         <div className="w-[15%]">Filtro Vertical</div>
                         <div className="w-[85%] flex flex-wrap gap-5 justify-center">
-                            {products?.map(function(product, idx) {
+                            {products?.map(function(product) {
                                 return (
                                     <ProductCard
-                                        key={idx}
+                                        key={product.id}
                                         product={product}
                                         size={4}
                                     />
