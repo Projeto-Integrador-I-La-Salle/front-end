@@ -1,11 +1,47 @@
+import { useState } from "react";
+import { PhoneInput } from "./PhoneInput.component";
+import { register } from "../api/auth.api";
+import { useNavigate } from "react-router";
+
 function RegisterBox() {
+  const [nameForm, setNameForm] = useState({ value: '', error: null });
+  const [emailForm, setEmailForm] = useState({ value: '', error: null });
+  const [passwordForm, setPasswordForm] = useState({ value: '', error: null });
+  const [contactForm, setContactForm] = useState({ value: '', error: null });
+  const navigate = useNavigate();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    const data = {
+      name: nameForm.value,
+      email: emailForm.value,
+      password: passwordForm.value,
+      telefone: contactForm.value
+    };
+
+    // TODO: error handling.
+    const res = await register(data);
+
+    if (res.status === 422) {
+      console.error(res);
+      return;
+    }
+
+    if (res.status === 201) {
+      alert(res.data?.message || "Usuário registrado com sucesso!");
+      navigate("/");
+    }
+
+  }
+
   return (
     <div className="flex items-center justify-center ">
       <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-sm">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
           Cadastre-se
         </h2>
-        <form className="space-y-5">
+        <form className="space-y-5" onSubmit={handleSubmit}>
           <div>
             <label
               htmlFor="text"
@@ -18,6 +54,9 @@ function RegisterBox() {
               placeholder="Digite seu nome"
               className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none"
               required
+              onChange={function(e) {
+                setNameForm({ value: e.target.value, error: null })
+              }}
             />
           </div>
           <div>
@@ -32,6 +71,9 @@ function RegisterBox() {
               placeholder="Digite seu email"
               className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none"
               required
+              onChange={function(e) {
+                setEmailForm({ value: e.target.value, error: null })
+              }}
             />
           </div>
           <div>
@@ -46,6 +88,9 @@ function RegisterBox() {
               placeholder="Digite sua senha"
               className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none"
               required
+              onChange={function(e) {
+                setPasswordForm({ value: e.target.value, error: null })
+              }}
             />
           </div>
           <div>
@@ -55,13 +100,12 @@ function RegisterBox() {
             >
               Contato:
             </label>
-            <input
-              type="tel"
-              id="telefone"
+            <PhoneInput
               name="telefone"
-              placeholder="Ex: (99) 99999-9999"
-              className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none"
-              required
+              value={contactForm.value}
+              id="telefone"
+              placeholder="Ex: (51) 99999-9999"
+              onChange={setContactForm}
             />
           </div>
           <button
@@ -76,3 +120,4 @@ function RegisterBox() {
   );
 }
 export default RegisterBox;
+
