@@ -7,6 +7,8 @@ import { ProductDetailsPage } from "../pages/productDetails/ProductDetails.page.
 import { WishlistPage } from "../pages/wishelist/WishlistPage.jsx";
 import { ReserveListPage } from "../pages/reservations/ReserveListPage.jsx";
 import { CheckOrderPage } from "../pages/checkOrder/CheckOrderPage.jsx";
+import { getById } from "../api/products.api.js";
+import { LoaderFallback } from "../../LoaderFallback.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -20,10 +22,11 @@ export const router = createBrowserRouter([
   {
     path: "/produtos/:id",
     loader: async ({ params }) => {
-      //const data = await fetch();
-      return {};
+      const response = await getById(params?.id || "1");
+      return { product: response?.data?.data };
     },
     Component: ProductDetailsPage,
+    HydrateFallback: LoaderFallback
   },
   {
     path: "/login",
@@ -46,3 +49,4 @@ export const router = createBrowserRouter([
     Component: CheckOrderPage,
   },
 ]);
+

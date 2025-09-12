@@ -5,7 +5,7 @@
  * @property {string} descricao
  * @property {number} preco
  * @property {number} qtdEstoque
- * @property {Array<CategoryType>} categoria
+ * @property {CategoryType} categoria
  * @property {Array<ImageType>} imagens
  */
 
@@ -22,4 +22,10 @@
  * @property {number} id
  * @property {string} url
  */
+
+
+/**
+ * @typedef {Object} LoaderData
+ * @property {ProductType} product
+ * */
 

@@ -1,13 +1,14 @@
+import { useEffect, useState } from "react";
+
 import { useLoaderData } from "react-router";
+
+import '../../types/global'
+
 import TopBar from "../../components/TopBar";
 import MainHeader from "../../components/MainHeader";
 import { NavBar } from "../../components/NavBar";
 import { Container } from "../../components/Container.component";
-import imgCapacete from '../../assets/img-capacete.jpg';
-import imgCapaceteAlt from '../../assets/img-capacete-alt.webp';
-import imgUnavailableProduct from '../../assets/img-unavailable-product.webp';
-
-import { useState } from "react";
+import { ProductCard } from "../../components/ProductCard.component";
 import { TypographyHeading } from "../../components/typography/TypographyHeading.component";
 import { StockStatus } from "../../components/StockStatus.component";
 import { TypographyBody } from "../../components/typography/TypographyBody.component";
@@ -17,23 +18,20 @@ import { Quantity } from "../../components/Quantity.component";
 
 import iconShop from '../../assets/icons/icon-shop-vector.svg';
 import iconFavorite from '../../assets/icons/icon-heart-success-dark-vector.svg';
-import { ProductCard } from "../../components/ProductCard.component";
+import imgUnavailableProduct from '../../assets/img-unavailable-product.webp';
+import { useGetAllProducts } from "../../hooks/getAllProducts.hook";
 
 export function ProductDetailsPage() {
-    const { data } = useLoaderData();
+    /** @type {LoaderData} */
+    const { product } = useLoaderData();
 
-    const images = {
-        mainImage: imgCapacete,
-        variations: [imgCapacete, imgCapacete, imgCapaceteAlt, imgCapaceteAlt]
-    };
+    const { products, getAll } = useGetAllProducts();
 
-    const productMock = {
-        hasDiscount: true,
-        category: 'Acessórios',
-        tags: ['proteção', 'segurança']
-    }
+    useEffect(function() {
+        getAll();
+    }, []);
 
-    const relatedProducts = new Array(4).fill(0);
+    const relatedProducts = products;
 
     return (
         <div>
@@ -43,8 +41,8 @@ export function ProductDetailsPage() {
             <Container>
                 <div className="mt-10">
                     <section className="flex justify-between">
-                        <ImageSection images={images} />
-                        <ProductInfo product={productMock} />
+                        <ImageSection images={product?.imagens} />
+                        <ProductInfo product={product} />
                     </section>
                     <section className="flex flex-col items-center my-10">
                         <TypographyHeading weight={600} variation={5}>
@@ -52,8 +50,15 @@ export function ProductDetailsPage() {
                         </TypographyHeading>
                         <div className="flex justify-between my-10 gap-5">
                             {relatedProducts?.length > 0 &&
-                                relatedProducts?.map(function(_, idx) {
-                                    return (<ProductCard key={idx} />);
+                                relatedProducts?.map(function(product, idx) {
+                                    if (idx < 4) {
+                                        return (
+                                            <ProductCard
+                                                key={product.id}
+                                                product={product}
+                                            />
+                                        );
+                                    }
                                 })
                             }
                         </div>
@@ -69,13 +74,13 @@ export function ProductDetailsPage() {
  * Renders an image section component.
  *
  * @component
- * @param {object} images The images to be rendered.
+ * @param {{ images: Array<ImageType> }} images The images to be rendered.
  * @returns {ReactNode} A React element displaying the images.
  */
 function ImageSection({ images }) {
-    const [currentImg, setCurrentImg] = useState(images?.mainImage || imgUnavailableProduct);
+    const [currentImg, setCurrentImg] = useState(images?.[0].url || imgUnavailableProduct);
 
-    const hasMoreThanOneVariation = images?.variations?.length > 0;
+    const hasMoreThanOneVariation = images?.length > 0;
 
     /**
      * Set the current image on the state when click.
@@ -90,16 +95,16 @@ function ImageSection({ images }) {
         <div className="flex items-center w-[50%]">
             <div className="flex flex-col gap-3 w-[30%] items-center">
                 {hasMoreThanOneVariation
-                    ? images.variations.map(function(image, idx) {
+                    ? images.map(function(image) {
                         return (
                             <button
-                                key={idx}
+                                key={image.id}
                                 className="p-1 hover:border border-red-300"
                                 onClick={function() {
-                                    handleImageButtonClick(image);
+                                    handleImageButtonClick(image.url);
                                 }}>
                                 <img
-                                    src={image}
+                                    src={image.url}
                                     height={100}
                                     width={100}
                                 />
@@ -112,13 +117,20 @@ function ImageSection({ images }) {
                 }
             </div>
             <div className="w-[70%] flex items-center justify-center h-[100%]">
-                <img src={currentImg} className="" height={150} width={150} />
+                <img
+                    src={currentImg}
+                    className="w-full h-full object-cover p-5"
+                    alt="imagem"
+                />
             </div>
         </div >
     );
 }
 
 
+/**
+ * @param {{ product: ProductType }} props
+ */
 function ProductInfo({ product }) {
     const [currentQuantity, setCurrentQuantity] = useState(1);
 
@@ -129,7 +141,9 @@ function ProductInfo({ product }) {
     return (
         <div className="w-[50%] select-none">
             <div className="flex gap-2 items-center mb-5">
-                <TypographyHeading variation={4} weight={600}>Capacete</TypographyHeading>
+                <TypographyHeading variation={4} weight={600}>
+                    {product.nome}
+                </TypographyHeading>
                 <StockStatus hasStock={true} />
             </div>
             {hasReview && <div>Estrelhas de review</div>}
@@ -144,7 +158,7 @@ function ProductInfo({ product }) {
                 }
                 <TypographyBody>
                     <TypographyBody.XXL>
-                        R$17,28
+                        R${product?.preco?.toString().replace('.', ',')}
                     </TypographyBody.XXL>
                 </TypographyBody>
                 {product?.hasDiscount &&
@@ -155,21 +169,14 @@ function ProductInfo({ product }) {
             <div> {/* Product Description */}
                 <TypographyBody className="text-gray-500">
                     <TypographyBody.Small>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore magna
-                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                        ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                        Duis aute irure dolor in reprehenderit in voluptate velit
-                        esse cillum dolore eu fugiat nulla pariatur.
-                        Excepteur sint occaecat cupidatat non proident, sunt in
-                        culpa qui officia deserunt mollit anim id est laborum.
+                        {product.descricao}
                     </TypographyBody.Small>
                 </TypographyBody>
             </div>
             <SectionIntersection />
             <div className="flex items-center justify-between"> {/* Control's button */}
                 <Quantity
-                    availableStockQuantity={5}
+                    availableStockQuantity={product.qtdEstoque}
                     currentQuantity={currentQuantity}
                     setCurrentQuantity={setCurrentQuantity}
                 />
@@ -186,7 +193,7 @@ function ProductInfo({ product }) {
                     </TypographyBody>
                     <TypographyBody className="text-gray-500">
                         <TypographyBody.Small>
-                            {product?.category}
+                            {product?.categoria?.tipo}
                         </TypographyBody.Small>
                     </TypographyBody>
                 </div>

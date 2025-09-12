@@ -1,11 +1,19 @@
-import imgLuva from '../assets/img-luva.webp';
+import { useState } from 'react';
+
+import '../types/global'
+
 import { TypographyBody } from './typography/TypographyBody.component';
+
+import {
+  addItemToWishlist,
+  getWishlistItemById,
+  removeWishlistItemById
+} from '../services/storage';
+
+import imgLuva from '../assets/img-luva.webp';
 import BagNoneIcon from '../assets/icons/icon-bag-none.svg'
 import FavoriteDefaultIcon from '../assets/icons/icon-heart-default-vector.svg'
 import FavoriteRedIcon from '../assets/icons/icon-heart-red-vector.svg'
-import { useState } from 'react';
-import { addItemToWishlist, getWishlistItemById, removeWishlistItemById } from '../services/storage';
-import '../types/global'
 
 /**
  * @param {{ product: ProductType, size?: number }} props
@@ -17,7 +25,7 @@ export function ProductCard({ product, size = 4 }) {
 
   return (
     <a
-      href={'#'}
+      href={`/produtos/${product.id}`}
       className={`border h-[250px] w-[200px] flex flex-col items-center justify-between p-2
                     shadow-md
                     transition-colors duration-300 ease-in-out
