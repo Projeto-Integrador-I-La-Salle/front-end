@@ -1,8 +1,4 @@
-/**
- * @typedef WishlistType
- * @type {object}
- * @property {string[]} products - products list.
- */
+import '../types/global';
 
 const WISHLIST_KEY = "wishlist";
 
@@ -22,11 +18,11 @@ export function getWishlist() {
 /**
  * Add a new item to the wishlist key on localStorage.
  *
- * @param {string} productId The unique identifier of the product.
+ * @param {ProductType} product
  */
-export function addItemToWishlist(productId) {
-  if (!productId || productId?.length < 1) {
-    throw new Error("[ERROR]: Param productId should not be null or empty.");
+export function addItemToWishlist(product) {
+  if (!product) {
+    throw new Error("[ERROR]: Param product should not be null or undefined.");
   }
 
   const items = getWishlist();
@@ -34,7 +30,7 @@ export function addItemToWishlist(productId) {
   const newItems = {
     products: [
       ...items?.products,
-      productId
+      product
     ]
   };
 
@@ -57,7 +53,7 @@ export function getWishlistItemById(productId) {
   }
 
   return getWishlist()?.products
-    .find(product => product === productId) !== undefined
+    .find(product => product.id === productId) !== undefined
     ? true
     : false;
 }
@@ -73,7 +69,7 @@ export function removeWishlistItemById(productId) {
   }
 
   const items = getWishlist();
-  const products = items?.products.filter(product => product !== productId);
+  const products = items?.products.filter(product => product.id !== productId);
 
   const newItems = {
     products: [

@@ -45,7 +45,7 @@ export function ProductCard({ product, size = 4 }) {
         <div>Desconto 50%</div>
       }
       {isHovering &&
-        <FavoriteButton productId={product?.id} />
+        <FavoriteButton product={product} />
       }
       <img src={product?.imagens[0].url || imgLuva} className='w-[70%] rounded-md' />
       <div className='w-[100%] flex justify-between items-center'>
@@ -70,17 +70,20 @@ export function ProductCard({ product, size = 4 }) {
   );
 }
 
-function FavoriteButton({ productId }) {
-  const favorited = getWishlistItemById(productId);
+/**
+ * @param {{ product: ProductType }} product
+ */
+function FavoriteButton({ product }) {
+  const favorited = getWishlistItemById(product.id);
 
   const [isFavorited, setIsFavorited] = useState(favorited);
 
   function handleFavoriteButtonClick() {
     setIsFavorited(!isFavorited);
 
-    getWishlistItemById(productId)
-      ? removeWishlistItemById(productId)
-      : addItemToWishlist(productId);
+    getWishlistItemById(product.id)
+      ? removeWishlistItemById(product.id)
+      : addItemToWishlist(product);
   }
 
   return (

@@ -27,5 +27,12 @@
 /**
  * @typedef {Object} LoaderData
  * @property {ProductType} product
- * */
+ */
+
+
+/**
+ * @typedef WishlistType
+ * @type {object}
+ * @property {Array<ProductType>} products - products list.
+ */
 

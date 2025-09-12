@@ -1,42 +1,24 @@
+import { useState } from "react";
+
+import { getWishlist, removeWishlistItemById } from "../../services/storage.js";
+
 import TopBar from "../../components/TopBar.jsx";
 import MainHeader from "../../components/MainHeader.jsx";
 import { NavBar } from "../../components/NavBar.jsx";
 import { ProductRow } from "../../components/ProductRow.jsx";
-import luvas from "../../assets/img-luva.webp";
+
 import { ChevronRightIcon, HomeIcon } from "lucide-react";
-import { useState } from "react";
 
 function WishlistPage() {
-  //Lista de produtos para teste de renderização. Posteriormente tera que conectar ao banco.
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      name: "Luvas antederrapante",
-      image: luvas,
-      price: "R$10.00",
-      status: "Em estoque",
-    },
-    {
-      id: 2,
-      name: "Luvas antederrapante",
-      image: luvas,
-      price: "R$10.00",
-      status: "Em estoque",
-    },
-    {
-      id: 3,
-      name: "Luvas antederrapante",
-      image: luvas,
-      price: "R$10.00",
-      status: "Em estoque",
-    },
-  ]);
+  const [products, setProducts] = useState(getWishlist().products);
 
+  /**
+   * @param {string} id - The product identifier.
+   * */
   function removeProduct(id) {
     setProducts((prev) => prev.filter((item) => item.id !== id));
-    console.log(id);
+    removeWishlistItemById(id);
   }
-  console.log("Products:", products);
 
   return (
     <div>
@@ -60,10 +42,10 @@ function WishlistPage() {
           <span className="text-right">Remover</span>
         </div>
         {products.length > 0 ? (
-          products.map((props) => (
+          products.map((product) => (
             <ProductRow
-              key={props.id}
-              {...props}
+              key={product.id}
+              product={product}
               onRemove={removeProduct}
             />
           ))

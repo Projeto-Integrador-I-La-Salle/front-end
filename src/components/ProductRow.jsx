@@ -1,33 +1,39 @@
 import { CircleXIcon } from "lucide-react";
-function ProductRow ({ id, name, image, price, status, onRemove }) {
-  const inStock = status === "Em estoque";
+
+/**
+ * @param {{ product: ProductType, onRemove: Function }} props
+ */
+function ProductRow({ product, onRemove }) {
+  // TODO: handle this later.
+  const inStock = "Em estoque";
 
   return (
     <div className="grid grid-cols-4 items-center py-4 border-b last:border-b-0">
       <div className="flex items-center gap-3">
         <img
-          src={image}
-          alt={name}
+          src={product?.imagens?.[0]?.url}
+          alt={product?.nome}
           className="w-14 h-14 rounded-lg object-cover"
         />
-        <span className="font-medium text-gray-700">{name}</span>
+        <span className="font-medium text-gray-700">{product?.nome}</span>
       </div>
       <div>
-        <span className="font-semibold text-gray-900">{price}</span>
+        <span className="font-semibold text-gray-900">
+          {product?.preco.toString().replace('.', ',')}
+        </span>
       </div>
       <div>
         <span
-          className={`px-3 py-1 rounded-full text-xs font-semibold ${
-            inStock ? "bg-green-100 text-green-600" : "bg-red-100 text-red-500"
-          }`}
+          className={`px-3 py-1 rounded-full text-xs font-semibold ${inStock ? "bg-green-100 text-green-600" : "bg-red-100 text-red-500"
+            }`}
         >
-          {status}
+          Em estoque
         </span>
       </div>
       <div className="flex justify-end">
-        <button 
-        onClick={() => {onRemove(id)}}
-        className="flex text-gray-400 hover:text-red-500 text-xl">
+        <button
+          onClick={() => { onRemove(product.id) }}
+          className="flex text-gray-400 hover:text-red-500 text-xl">
           <CircleXIcon />
         </button>
       </div>
