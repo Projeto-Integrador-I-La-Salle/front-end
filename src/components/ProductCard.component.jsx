@@ -37,7 +37,7 @@ export function ProductCard({ product, size = 4 }) {
         <div>Desconto 50%</div>
       }
       {isHovering &&
-        <FavoriteButton productId={product.id} />
+        <FavoriteButton productId={product?.id} />
       }
       <img src={product?.imagens[0].url || imgLuva} className='w-[70%] rounded-md' />
       <div className='w-[100%] flex justify-between items-center'>
