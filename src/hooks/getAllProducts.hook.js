@@ -17,7 +17,7 @@ export function useGetAllProducts() {
     try {
       const response = await get();
       setProducts(response.data?.data);
-      setAditionalInfo(response.data);
+      setAditionalInfo(response.data?.meta);
     } catch (err) {
       console.error(err);
     } finally {
