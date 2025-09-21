@@ -3,6 +3,7 @@ import fundo from "../../assets/bg-loja.jpg";
 import TopBar from "../../components/TopBar.jsx";
 import MainHeader from "../../components/MainHeader.jsx";
 import { NavBar } from "../../components/NavBar.jsx";
+import { Footer } from "../../components/Footer.jsx";
 
 function RegisterPage() {
   return (
@@ -19,6 +20,7 @@ function RegisterPage() {
           <RegisterBox />
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

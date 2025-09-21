@@ -84,7 +84,7 @@ function NavBar() {
             <span className="top-6 absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-12"></span>
           </li>
           <li className="relative group">
-            <a href="#">Sobre-MotoSpectro</a>
+            <a href="#">Sobre</a>
             <span className="top-6 absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-12"></span>
           </li>
         </ul>

@@ -6,8 +6,10 @@ import luvas from "../../assets/img-luva.webp";
 import capacete from "../../assets/img-capacete.jpg";
 import { ChevronRightIcon, HomeIcon, ArrowRightIcon } from "lucide-react";
 import { useState } from "react";
+import { Footer } from "../../components/Footer.jsx";
+import Cookies from "js-cookie";
 
-function ReserveListPage() {
+export function ReserveListPage() {
   //Lista de produtos para teste de renderização. Posteriormente tera que conectar ao banco.
   const [products, setProducts] = useState([
     {
@@ -29,6 +31,16 @@ function ReserveListPage() {
     console.log(id);
   }
   console.log("Products:", products);
+
+  function handleContinueOrder() {
+    if (products.length > 0) {
+      const productIds = products.map((p) => p.id);
+      Cookies.set("reserved_products_ids", JSON.stringify(productIds));
+      window.location.href = "/checando-pedido";
+    } else {
+      document.alert("Não a produtos em seu carrinho.");
+    }
+  }
 
   return (
     <div>
@@ -67,12 +79,13 @@ function ReserveListPage() {
         )}
       </div>
       <div className="flex justify-end items-center w-full max-w-4xl mx-auto mt-10 gap-4">
-        <button className="flex items-center gap-2 bg-gray-900 text-white px-6 py-2 rounded-2xl shadow-lg hover:bg-red-600 transition font-semibold">
+        <button
+        onClick={handleContinueOrder} 
+        className="flex items-center gap-2 bg-gray-900 text-white px-6 py-2 rounded-2xl shadow-lg hover:bg-red-600 transition font-semibold">
           <span>Continuar com pedido</span> <ArrowRightIcon />
         </button>
       </div>
+      <Footer />
     </div>
   );
 }
-
-export { ReserveListPage };

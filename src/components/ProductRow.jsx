@@ -19,21 +19,27 @@ function ProductRow({ product, onRemove }) {
       </div>
       <div>
         <span className="font-semibold text-gray-900">
-          {product?.preco.toString().replace('.', ',')}
+          {product?.preco.toString().replace(".", ",")}
         </span>
       </div>
       <div>
         <span
-          className={`px-3 py-1 rounded-full text-xs font-semibold ${inStock ? "bg-green-100 text-green-600" : "bg-red-100 text-red-500"
-            }`}
+          className={`px-3 py-1 rounded-full text-xs font-semibold ${
+            inStock ? "bg-green-100 text-green-600" : "bg-red-100 text-red-500"
+          }`}
         >
           Em estoque
         </span>
+
+        <StockStatus hasStock={inStock} />
       </div>
       <div className="flex justify-end">
         <button
-          onClick={() => { onRemove(product.id) }}
-          className="flex text-gray-400 hover:text-red-500 text-xl">
+          onClick={() => {
+            onRemove(product.id);
+          }}
+          className="flex text-gray-400 hover:text-red-500 text-xl"
+        >
           <CircleXIcon />
         </button>
       </div>

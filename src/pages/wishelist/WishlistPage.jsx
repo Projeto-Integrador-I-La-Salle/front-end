@@ -6,8 +6,9 @@ import TopBar from "../../components/TopBar.jsx";
 import MainHeader from "../../components/MainHeader.jsx";
 import { NavBar } from "../../components/NavBar.jsx";
 import { ProductRow } from "../../components/ProductRow.jsx";
-
 import { ChevronRightIcon, HomeIcon } from "lucide-react";
+import { Footer } from "../../components/Footer.jsx";
+
 
 function WishlistPage() {
   const [products, setProducts] = useState(getWishlist().products);
@@ -55,6 +56,7 @@ function WishlistPage() {
           </p>
         )}
       </div>
+      <Footer />
     </div>
   );
 }

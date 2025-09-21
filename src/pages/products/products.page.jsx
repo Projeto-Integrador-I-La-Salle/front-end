@@ -7,7 +7,11 @@ import TopBar from "../../components/TopBar";
 import HomeIcon from '../../assets/icons/icon-home.svg'
 import RightArrowVectorIcon from '../../assets/icons/icon-right-arrow-vector.svg'
 import { Paginator } from "../../components/Paginator.component";
+
 import { useGetAllProducts } from "../../hooks/getAllProducts.hook";
+
+import { Footer } from "../../components/Footer";
+
 
 export function ProductsPage() {
     const { products, getAll, aditionalInfo } = useGetAllProducts();
@@ -55,6 +59,7 @@ export function ProductsPage() {
                     </div>
                 </div>
             </Container>
+            <Footer />
         </div >
     );
 }

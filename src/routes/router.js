@@ -9,6 +9,8 @@ import { ReserveListPage } from "../pages/reservations/ReserveListPage.jsx";
 import { CheckOrderPage } from "../pages/checkOrder/CheckOrderPage.jsx";
 import { getById } from "../api/products.api.js";
 import { LoaderFallback } from "../../LoaderFallback.jsx";
+import { AboutUsPage } from "../pages/about/AboutUsPage.jsx";
+
 
 export const router = createBrowserRouter([
   {
@@ -41,12 +43,16 @@ export const router = createBrowserRouter([
     Component: WishlistPage,
   },
   {
-    path: "/reservas",
+    path: "/carrinho-reservas",
     Component: ReserveListPage,
   },
   {
     path: "/checando-pedido",
     Component: CheckOrderPage,
+  },
+  {
+    path: "/sobre",
+    Component: AboutUsPage,
   },
 ]);
 
