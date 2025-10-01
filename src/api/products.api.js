@@ -1,14 +1,16 @@
 import { axiosInstance } from "./axiosInstance";
+
 import '../types/global';
 
 /**
  * Get list of products.
  *
+ * @param {PageType} page
  * @returns {Promise<AxiosResponse<Array<ProductType>>>}
  */
-export async function get() {
+export async function get({ pageSize = 20, pageNumber = 1 } = {}) {
   const response = await axiosInstance.get(
-    '/produtos'
+    `/produtos?page=${pageNumber}&per_page=${pageSize}`
   );
 
   return response;

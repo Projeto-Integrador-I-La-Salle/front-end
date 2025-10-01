@@ -32,7 +32,24 @@
 
 /**
  * @typedef WishlistType
- * @type {object}
  * @property {Array<ProductType>} products - products list.
+ */
+
+
+/**
+ * @typedef PageType
+ * @property {10|20|50|100} [pageSize=20] - Allowed sizes per page, default 20.
+ * @property {number} [pageNumber=1] - Current page, default 1.
+ * @property {Array<LinkType>} links
+ * @property {number} total
+ */
+
+
+/**
+ * @typedef LinkType
+ * @property {string} url
+ * @property {string} label
+ * @property {number | null} page
+ * @property {boolean} active
  */
 

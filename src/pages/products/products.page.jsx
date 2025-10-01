@@ -1,9 +1,14 @@
 import { useEffect } from "react";
+
+import { useGetAllProducts } from "../../hooks/getAllProducts.hook";
+
 import { Container } from "../../components/Container.component";
 import MainHeader from "../../components/MainHeader";
 import { NavBar } from "../../components/NavBar";
 import { ProductCard } from "../../components/ProductCard.component";
 import TopBar from "../../components/TopBar";
+import { Paginator } from "../../components/Paginator.component";
+
 import HomeIcon from '../../assets/icons/icon-home.svg'
 import RightArrowVectorIcon from '../../assets/icons/icon-right-arrow-vector.svg'
 import { Paginator } from "../../components/Paginator.component";
@@ -14,11 +19,16 @@ import { Footer } from "../../components/Footer";
 
 
 export function ProductsPage() {
-    const { products, getAll, aditionalInfo } = useGetAllProducts();
+    const {
+        products,
+        getAll,
+        page,
+        setPagination
+    } = useGetAllProducts();
 
     useEffect(function() {
-        getAll();
-    }, []);
+        getAll(page);
+    }, [page.pageNumber]);
 
     return (
         <div>
@@ -38,7 +48,7 @@ export function ProductsPage() {
                     <div className="flex justify-between my-5">
                         Filtros horizontais
                         <div className="flex gap-1">
-                            <p className="text-gray-900 font-bold">{aditionalInfo?.total}</p>
+                            <p className="text-gray-900 font-bold">{page.total}</p>
                             <p className="text-gray-600">Resultados Encontrados</p>
                         </div>
                     </div>
@@ -54,7 +64,7 @@ export function ProductsPage() {
                                     />
                                 );
                             })}
-                            <Paginator />
+                            <Paginator page={page} setPage={setPagination} />
                         </div>
                     </div>
                 </div>
