@@ -8,15 +8,10 @@ import { NavBar } from "../../components/NavBar";
 import { ProductCard } from "../../components/ProductCard.component";
 import TopBar from "../../components/TopBar";
 import { Paginator } from "../../components/Paginator.component";
+import { Footer } from "../../components/Footer";
 
 import HomeIcon from '../../assets/icons/icon-home.svg'
 import RightArrowVectorIcon from '../../assets/icons/icon-right-arrow-vector.svg'
-import { Paginator } from "../../components/Paginator.component";
-
-import { useGetAllProducts } from "../../hooks/getAllProducts.hook";
-
-import { Footer } from "../../components/Footer";
-
 
 export function ProductsPage() {
     const {
