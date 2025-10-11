@@ -3,8 +3,8 @@ import './index.css'
 import { RouterProvider } from "react-router/dom";
 import { router } from './routes/router';
 import ReactDOM from "react-dom/client";
-import { ModalProvider } from './contexts/ModalContext';
-import { LoaderProvider } from './contexts/LoaderContext';
+import { ModalProvider } from './providers/ModalProvider';
+import { LoaderProvider } from './providers/LoaderProvider';
 
 const root = document.getElementById("root");
 
