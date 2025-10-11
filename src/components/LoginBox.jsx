@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { login } from "../api/auth.api";
 import { setCookie } from "../services/cookies";
-import { redirect, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 function LoginBox() {
   const [email, setEmail] = useState("");

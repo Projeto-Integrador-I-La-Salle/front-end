@@ -23,9 +23,5 @@ function getCookie(name) {
   return null;
 };
 
-function updateCookie() {
-  setCookieFunction("custom-cookie", username, 1); // Set cookie for 7 days
-};
-
-export { setCookie, getCookie, updateCookie };
+export { setCookie, getCookie };
 

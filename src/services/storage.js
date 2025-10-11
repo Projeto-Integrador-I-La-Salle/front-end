@@ -29,7 +29,7 @@ export function addItemToWishlist(product) {
 
   const newItems = {
     products: [
-      ...items?.products,
+      ...items?.products || [],
       product
     ]
   };

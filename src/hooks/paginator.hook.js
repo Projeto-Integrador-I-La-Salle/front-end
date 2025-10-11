@@ -1,10 +1,6 @@
 import { useState } from "react";
 
-import { useSearchParams } from "react-router";
-
 export function usePaginator() {
-  const [searchParams, setSearchParams] = useSearchParams();
-
   /**
    * @type {[PageType, React.Dispatch<PageType>]}
    */

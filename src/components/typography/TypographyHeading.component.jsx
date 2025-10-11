@@ -1,4 +1,3 @@
-import React from "react";
 import { getFontWeight } from "../../utils";
 
 export function TypographyHeading({ children, weight = 400, variation }) {

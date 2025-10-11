@@ -15,6 +15,7 @@ import { TypographyBody } from "../../components/typography/TypographyBody.compo
 import { DiscountTag } from "../../components/DiscountTag.component";
 import { SectionIntersection } from "../../components/Intersection.component";
 import { Quantity } from "../../components/Quantity.component";
+import { Footer } from "../../components/Footer";
 
 import iconShop from "../../assets/icons/icon-shop-vector.svg";
 import iconFavorite from "../../assets/icons/icon-heart-success-dark-vector.svg";
@@ -27,7 +28,7 @@ export function ProductDetailsPage() {
 
   const { products, getAll } = useGetAllProducts();
 
-  useEffect(function () {
+  useEffect(function() {
     getAll();
   }, []);
 
@@ -50,7 +51,7 @@ export function ProductDetailsPage() {
             </TypographyHeading>
             <div className="flex justify-between my-10 gap-5">
               {relatedProducts?.length > 0 &&
-                relatedProducts?.map(function (product, idx) {
+                relatedProducts?.map(function(product, idx) {
                   if (idx < 4) {
                     return <ProductCard key={product.id} product={product} />;
                   }
@@ -91,12 +92,12 @@ function ImageSection({ images }) {
     <div className="flex items-center w-[50%]">
       <div className="flex flex-col gap-3 w-[30%] items-center">
         {hasMoreThanOneVariation ? (
-          images.map(function (image) {
+          images.map(function(image) {
             return (
               <button
                 key={image.id}
                 className="p-1 hover:border border-red-300"
-                onClick={function () {
+                onClick={function() {
                   handleImageButtonClick(image.url);
                 }}
               >
@@ -171,8 +172,8 @@ function ProductInfo({ product }) {
           currentQuantity={currentQuantity}
           setCurrentQuantity={setCurrentQuantity}
         />
-        <AddToCartButton handleSubmit={function () {}} />
-        <AddToFavoriteButton handleSubmit={function () {}} />
+        <AddToCartButton handleSubmit={function() { }} />
+        <AddToFavoriteButton handleSubmit={function() { }} />
       </div>
       <SectionIntersection />
       <div>
@@ -195,7 +196,7 @@ function ProductInfo({ product }) {
                 <TypographyBody.Small>Tag:</TypographyBody.Small>
               </TypographyBody>
               <div className="flex gap-1">
-                {product?.tags.map(function (tag, idx) {
+                {product?.tags.map(function(tag, idx) {
                   return (
                     <TypographyBody key={idx} className="text-gray-500">
                       <TypographyBody.Small>{tag}</TypographyBody.Small>

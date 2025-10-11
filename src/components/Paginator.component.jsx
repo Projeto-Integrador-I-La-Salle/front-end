@@ -46,7 +46,7 @@ export function Paginator({ page, setPage }) {
      * @param {LinkType} link
      * @param {number} idx
      */
-    className: function(link, _) {
+    className: function(link) {
       if (
         link.label === "&laquo; Previous" ||
         link.label === "Next &raquo;"
@@ -66,7 +66,7 @@ export function Paginator({ page, setPage }) {
           return (
             <button
               key={idx}
-              className={data.className(link, idx)}
+              className={data.className(link)}
               onClick={function() {
                 handleChangePageClick(link)
               }}
