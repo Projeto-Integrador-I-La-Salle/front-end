@@ -1,3 +1,5 @@
+import { StockStatus } from './StockStatus.component';
+
 import { CircleXIcon } from "lucide-react";
 
 /**
@@ -24,9 +26,8 @@ function ProductRow({ product, onRemove }) {
       </div>
       <div>
         <span
-          className={`px-3 py-1 rounded-full text-xs font-semibold ${
-            inStock ? "bg-green-100 text-green-600" : "bg-red-100 text-red-500"
-          }`}
+          className={`px-3 py-1 rounded-full text-xs font-semibold ${inStock ? "bg-green-100 text-green-600" : "bg-red-100 text-red-500"
+            }`}
         >
           Em estoque
         </span>

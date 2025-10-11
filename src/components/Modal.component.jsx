@@ -1,9 +1,9 @@
-export function Modal({ children, isOpen, setIsOpen }) {
+export function Modal({ children, isOpen }) {
   return (
     <div className="w-scree h-screen relative">
       {isOpen &&
         <>
-          <div class="fixed inset-0 bg-black bg-opacity-10"></div>
+          <div className="fixed inset-0 bg-black bg-opacity-10"></div>
           <div className="border rounded-sm bg-gray-100 p-3
                       absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
                       z-20

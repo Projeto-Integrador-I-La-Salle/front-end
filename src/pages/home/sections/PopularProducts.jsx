@@ -7,7 +7,7 @@ export function PopularProducts() {
 
     useEffect(function() {
         getAll();
-    }, []);
+    }, [getAll]);
 
     return (
         <div className="mx-[10%] font-poppins">

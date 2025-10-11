@@ -30,7 +30,7 @@ export function ProductDetailsPage() {
 
   useEffect(function() {
     getAll();
-  }, []);
+  }, [getAll]);
 
   const relatedProducts = products;
 

@@ -23,7 +23,7 @@ export function ProductsPage() {
 
     useEffect(function() {
         getAll(page);
-    }, [page.pageNumber]);
+    }, [page.pageNumber, getAll, page]);
 
     return (
         <div>
