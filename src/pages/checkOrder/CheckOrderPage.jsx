@@ -2,6 +2,7 @@ import { Container } from "../../components/Container.component";
 import TopBar from "../../components/TopBar";
 import MainHeader from "../../components/MainHeader";
 import { NavBar } from "../../components/NavBar";
+import { InputBox } from "../../components/inputBox";
 import { TypographyHeading } from "../../components/typography/TypographyHeading.component";
 import { ProductRowFinalOrder } from "../../components/ProductRowFinalOrder";
 import luvas from "../../assets/img-luva.webp";

@@ -10,6 +10,7 @@ import { CheckOrderPage } from "../pages/checkOrder/CheckOrderPage.jsx";
 import { getById } from "../api/products.api.js";
 import { LoaderFallback } from "../../LoaderFallback.jsx";
 import { AboutUsPage } from "../pages/about/AboutUsPage.jsx";
+import { AdminPage } from "../pages/admin/admin.page.jsx";
 
 
 export const router = createBrowserRouter([
@@ -54,5 +55,9 @@ export const router = createBrowserRouter([
     path: "/sobre",
     Component: AboutUsPage,
   },
+  {
+    path: "/admin",
+    Component: AdminPage,
+  }
 ]);
 
