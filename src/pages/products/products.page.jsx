@@ -17,13 +17,15 @@ export function ProductsPage() {
     const {
         products,
         getAll,
+        pageNumber,
+        pageSize,
         page,
         setPagination
     } = useGetAllProducts();
 
-    useEffect(function() {
-        getAll(page);
-    }, [page.pageNumber]);
+    useEffect(() => {
+        getAll({ pageNumber, pageSize });
+    }, [pageNumber, pageSize, getAll]);
 
     return (
         <div>

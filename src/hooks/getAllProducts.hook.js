@@ -53,6 +53,8 @@ export function useGetAllProducts() {
   return {
     products,
     getAll,
+    pageNumber: page.pageNumber,
+    pageSize: page.pageSize,
     page,
     setPagination
   };
