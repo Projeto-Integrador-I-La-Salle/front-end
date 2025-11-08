@@ -1,10 +1,12 @@
 /**
  * @typedef ProductType
  * @property {string} id
+ * @property {number} codigo
  * @property {string} nome
  * @property {string} descricao
  * @property {number} preco
  * @property {number} qtdEstoque
+ * @property {number} vlrVenda
  * @property {CategoryType} categoria
  * @property {Array<ImageType>} imagens
  */

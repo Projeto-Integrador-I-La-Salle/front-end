@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export function usePaginator() {
   /**
@@ -14,10 +14,10 @@ export function usePaginator() {
   /**
    * @param {PageType} page
    */
-  function setPagination(page) {
+  const setPagination = useCallback(function(page) {
     // TODO: set searchParam
     setPage(page);
-  }
+  }, []);
 
   return { page, setPagination };
 }

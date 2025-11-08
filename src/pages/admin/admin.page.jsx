@@ -1,15 +1,72 @@
+import { useEffect } from "react";
 import { NavigationMenu } from "./components/NavigationMenu.component";
+import { useGetAllProducts } from "../../hooks/getAllProducts.hook";
+import { useNavigate } from "react-router";
 
 export function AdminPage() {
-    return (
-        <div>
-            <h1>Admin Page</h1>
-            <div className="border rounded-sm w-[15%] h-[350px] p-3">
-                <p>Navegação</p>
+    const { products, getAll, } = useGetAllProducts();
+    const navigate = useNavigate();
 
+    const headers = ['#', 'Código', 'Nome', 'Qtd. Estoque', 'Valor Venda'];
+
+    useEffect(function() {
+        getAll({ pageSize: 50 });
+    }, [getAll]);
+
+    return (
+        <div className="h-full overflow-hidden bg-gray-50"> {/* 1️⃣ ocupa a tela toda e bloqueia scroll */}
+            <h1 className="p-4">Admin Page</h1>
+
+            <div className="flex h-full">
                 <NavigationMenu />
+                <div className="border rounded-sm w-screen h-[90%] mx-5 bg-white">
+                    <div className="flex flex-col h-full">
+                        <h1 className="border-b p-2">Estoque de Produtos</h1>
+
+                        <div className="overflow-y-auto border cursor-default" id="scroll-box">
+                            <table className="w-full border-collapse text-left">
+                                <thead className="sticky top-0 bg-gray-100">
+                                    <tr className="border-b">
+                                        {headers && headers.length > 0 &&
+                                            headers.map(function(header, index) {
+                                                return (
+                                                    <th key={index} className="p-2">
+                                                        {header}
+                                                    </th>
+                                                );
+                                            })}
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {products?.length > 0 ? (
+                                        products.map((product, index) => (
+                                            <tr
+                                                key={index}
+                                                className="hover:bg-gray-100 cursor-pointer border-b"
+                                                onClick={() => navigate(`/admin/produtos/${product.id}`)}
+                                            >
+                                                <td className="p-2">{index + 1}</td>
+                                                <td className="p-2">{product.codigo}</td>
+                                                <td className="p-2">{product.nome}</td>
+                                                <td className="p-2">{product.qtdEstoque}</td>
+                                                <td className="p-2">R$ {product.vlrVenda}</td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan="5" className="p-4 text-gray-500">
+                                                Não há produtos cadastrados.
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </div >
     );
 }
 

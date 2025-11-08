@@ -38,3 +38,25 @@ export async function getById(id) {
   return response;
 }
 
+/**
+ * Delete a product by id.
+ *
+ * @param {string} id - The product identifier.
+ * @returns {Promise<AxiosResponse<any, any>>}
+ */
+export async function deleteById(id) {
+  if (!id) {
+    throw new Error('[ERROR]: Param id is expected.');
+  }
+
+  if (typeof id !== 'string') {
+    throw new Error('[ERROR]: Param id should be of type string.');
+  }
+
+  const response = await axiosInstance.delete(
+    `/produtos/${id}`
+  );
+
+  return response;
+}
+

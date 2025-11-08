@@ -11,6 +11,7 @@ import { getById } from "../api/products.api.js";
 import { LoaderFallback } from "../../LoaderFallback.jsx";
 import { AboutUsPage } from "../pages/about/AboutUsPage.jsx";
 import { AdminPage } from "../pages/admin/admin.page.jsx";
+import { EditProductAdminPage } from "../pages/admin/screens/editProduct.page.jsx";
 
 
 export const router = createBrowserRouter([
@@ -58,6 +59,10 @@ export const router = createBrowserRouter([
   {
     path: "/admin",
     Component: AdminPage,
+  },
+  {
+    path: "/admin/produtos/:id",
+    Component: EditProductAdminPage,
   }
 ]);
 

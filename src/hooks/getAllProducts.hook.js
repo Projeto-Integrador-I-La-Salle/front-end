@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 
 import { get } from "../api/products.api";
 
@@ -18,7 +18,7 @@ export function useGetAllProducts() {
   /**
    * @param {PageType} [page={}] page
    */
-  async function getAll(page = {}) {
+  const getAll = useCallback(async function(page = {}) {
     let response = [];
 
     try {
@@ -48,7 +48,7 @@ export function useGetAllProducts() {
       console.error(err);
       setIsLoading(false)
     }
-  }
+  }, [setIsLoading, setPagination]);
 
   return {
     products,
