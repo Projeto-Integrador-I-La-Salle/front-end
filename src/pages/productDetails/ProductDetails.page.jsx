@@ -74,7 +74,7 @@ export function ProductDetailsPage() {
  */
 function ImageSection({ images }) {
   const [currentImg, setCurrentImg] = useState(
-    images?.[0].url || imgUnavailableProduct
+    images?.[0]?.url || imgUnavailableProduct
   );
 
   const hasMoreThanOneVariation = images?.length > 0;
@@ -98,10 +98,10 @@ function ImageSection({ images }) {
                 key={image.id}
                 className="p-1 hover:border border-red-300"
                 onClick={function() {
-                  handleImageButtonClick(image.url);
+                  handleImageButtonClick(image?.url);
                 }}
               >
-                <img src={image.url} height={100} width={100} />
+                <img src={image?.url} height={100} width={100} />
               </button>
             );
           })
