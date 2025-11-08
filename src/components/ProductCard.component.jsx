@@ -47,7 +47,7 @@ export function ProductCard({ product, size = 4 }) {
       {isHovering &&
         <FavoriteButton product={product} />
       }
-      <img src={product?.imagens[0].url || imgLuva} className='w-[70%] rounded-md' />
+      <img src={product?.imagens[0]?.url || imgLuva} className='w-[70%] rounded-md' />
       <div className='w-[100%] flex justify-between items-center'>
         <div>
           <TypographyBody weight={400}>
