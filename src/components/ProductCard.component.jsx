@@ -10,10 +10,10 @@ import {
   removeWishlistItemById
 } from '../services/storage';
 
-import imgLuva from '../assets/img-luva.webp';
 import BagNoneIcon from '../assets/icons/icon-bag-none.svg'
 import FavoriteDefaultIcon from '../assets/icons/icon-heart-default-vector.svg'
 import FavoriteRedIcon from '../assets/icons/icon-heart-red-vector.svg'
+import imgUnavailableProduct from "../assets/img-unavailable-product.webp";
 
 /**
  * @param {{ product: ProductType, size?: number }} props
@@ -47,7 +47,10 @@ export function ProductCard({ product, size = 4 }) {
       {isHovering &&
         <FavoriteButton product={product} />
       }
-      <img src={product?.imagens[0]?.url || imgLuva} className='w-[70%] rounded-md' />
+      <img
+        src={product?.imagens[0]?.url || imgUnavailableProduct}
+        className='w-[70%] rounded-md hover:scale-105 transition duration-300'
+      />
       <div className='w-[100%] flex justify-between items-center'>
         <div>
           <TypographyBody weight={400}>
