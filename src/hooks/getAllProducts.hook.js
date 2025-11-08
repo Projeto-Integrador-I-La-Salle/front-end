@@ -40,12 +40,9 @@ export function useGetAllProducts() {
         links: response.data?.meta?.links,
         total: response.data?.meta?.total
       });
-
-      requestAnimationFrame(function() {
-        setIsLoading(false)
-      });
     } catch (err) {
       console.error(err);
+    } finally {
       setIsLoading(false)
     }
   }, [setIsLoading, setPagination]);

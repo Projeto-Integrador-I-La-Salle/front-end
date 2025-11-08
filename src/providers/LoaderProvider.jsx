@@ -5,7 +5,7 @@ import { LoaderContext } from "../contexts/LoaderContext";
 import { Loader } from '../components/Loader.component';
 
 export function LoaderProvider({ children }) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <LoaderContext.Provider value={{ isLoading, setIsLoading }}>
