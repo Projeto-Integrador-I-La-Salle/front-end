@@ -23,7 +23,11 @@ export function ProductsPage() {
         setPagination
     } = useGetAllProducts();
 
-    useEffect(() => {
+    useEffect(function() {
+        window.scrollTo({
+            top: 500,
+            behavior: "smooth"
+        });
         getAll({ pageNumber, pageSize });
     }, [pageNumber, pageSize, getAll]);
 
@@ -51,17 +55,17 @@ export function ProductsPage() {
                     </div>
                     <div className="flex">
                         <div className="w-[15%]">Filtro Vertical</div>
-                        <div className="w-[85%] flex flex-wrap gap-5 justify-center">
-                            {products?.map(function(product) {
-                                return (
-                                    <ProductCard
-                                        key={product.id}
-                                        product={product}
-                                        size={4}
-                                    />
-                                );
-                            })}
-                            <Paginator page={page} setPage={setPagination} />
+
+                        <div className="w-[85%]">
+                            <div className="flex flex-wrap gap-5 justify-center">
+                                {products.map(product => (
+                                    <ProductCard key={product.id} product={product} size={4} />
+                                ))}
+                            </div>
+
+                            <div className="flex justify-center mt-10">
+                                <Paginator page={page} setPage={setPagination} />
+                            </div>
                         </div>
                     </div>
                 </div>
