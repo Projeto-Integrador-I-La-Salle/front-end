@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { getWishlist, removeWishlistItemById } from "../../services/storage.js";
 
@@ -8,10 +8,16 @@ import { NavBar } from "../../components/NavBar.jsx";
 import { ProductRow } from "../../components/ProductRow.jsx";
 import { ChevronRightIcon, HomeIcon } from "lucide-react";
 import { Footer } from "../../components/Footer.jsx";
+import { LoaderContext } from "../../contexts/LoaderContext.jsx";
 
 
 function WishlistPage() {
-  const [products, setProducts] = useState(getWishlist().products);
+  const [products, setProducts] = useState(getWishlist()?.products);
+  const { setIsLoading } = useContext(LoaderContext);
+
+  useEffect(function() {
+    setIsLoading(false);
+  }, [setIsLoading]);
 
   /**
    * @param {string} id - The product identifier.
@@ -42,7 +48,7 @@ function WishlistPage() {
           <span>Status</span>
           <span className="text-right">Remover</span>
         </div>
-        {products.length > 0 ? (
+        {products && products?.length > 0 ? (
           products.map((product) => (
             <ProductRow
               key={product.id}
@@ -52,7 +58,7 @@ function WishlistPage() {
           ))
         ) : (
           <p className="text-center text-gray-500 py-6">
-            Ainda não a produtos que você deseje.
+            Ainda não há produtos que você deseje.
           </p>
         )}
       </div>
