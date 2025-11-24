@@ -18,57 +18,84 @@ import imgUnavailableProduct from "../assets/img-unavailable-product.webp";
 /**
  * @param {{ product: ProductType, size?: number }} props
  */
-export function ProductCard({ product, size = 4 }) {
+export function ProductCard({ product, size = 4, variant = "default" }) {
   const [isHovering, setIsHovering] = useState(false);
-  const hasDiscount = false;
   const hasStars = false;
+
+  const isGrid = variant === "grid";
 
   return (
     <a
       href={`/produtos/${product.id}`}
-      className={`border h-[250px] w-[200px] flex flex-col items-center justify-between p-2
-                    shadow-md
-                    transition-colors duration-300 ease-in-out
-                    hover:border-[#8E1616]
-                    hover:shadow-xl
-                    relative
-                    ${size === 4 && 'rounded-lg'}
-      `}
-      onMouseEnter={function() {
-        setIsHovering(true);
-      }}
-      onMouseLeave={function() {
-        setIsHovering(false);
-      }}
+      className={
+        isGrid
+          ? `
+            border rounded-xl p-3 shadow-sm bg-white
+            flex flex-col gap-3
+            transition-all duration-300
+            hover:shadow-lg hover:border-[#8E1616]
+            relative
+          `
+          : `
+            border h-[250px] w-[200px] flex flex-col items-center justify-between p-2
+            shadow-md
+            transition-colors duration-300 ease-in-out
+            hover:border-[#8E1616]
+            hover:shadow-xl
+            relative
+            ${size === 4 && 'rounded-lg'}
+          `
+      }
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
     >
-      {hasDiscount &&
-        <div>Desconto 50%</div>
-      }
-      {isHovering &&
-        <FavoriteButton product={product} />
-      }
+      {isHovering && <FavoriteButton product={product} />}
+
       <img
-        src={product?.imagens[0]?.url || imgUnavailableProduct}
-        className='w-[70%] rounded-md hover:scale-105 transition duration-300'
+        src={product?.imagens?.[0]?.url || imgUnavailableProduct}
+        className={
+          isGrid
+            ? "w-full h-40 object-contain rounded-md transition-transform duration-300 hover:scale-105"
+            : "w-[70%] rounded-md hover:scale-105 transition duration-300"
+        }
       />
-      <div className='w-[100%] flex justify-between items-center'>
+
+      <div
+        className={
+          isGrid
+            ? "flex flex-col gap-1"
+            : "w-[100%] flex justify-between items-center"
+        }
+      >
         <div>
           <TypographyBody weight={400}>
             <TypographyBody.Small>
-              {product?.nome}
+              <span className={isGrid ? "line-clamp-2" : ""}>
+                {product?.nome}
+              </span>
             </TypographyBody.Small>
           </TypographyBody>
+
           <TypographyBody weight={500}>
             <TypographyBody.Medium>
               R${product?.preco.toString().replace('.', ',')}
             </TypographyBody.Medium>
           </TypographyBody>
-          {hasStars &&
-            <div>estrelhinas</div>
-          }
+
+          {hasStars && <div>estrelhinas</div>}
         </div>
-        <img src={BagNoneIcon} className='w=[40px] h-[40px]' />
+
+        {!isGrid && (
+          <img src={BagNoneIcon} className="w=[40px] h-[40px]" />
+        )}
       </div>
+
+      {isGrid && (
+        <img
+          src={BagNoneIcon}
+          className="w-8 h-8 absolute bottom-3 right-3 opacity-70"
+        />
+      )}
     </a>
   );
 }
@@ -78,10 +105,11 @@ export function ProductCard({ product, size = 4 }) {
  */
 function FavoriteButton({ product }) {
   const favorited = getWishlistItemById(product.id);
-
   const [isFavorited, setIsFavorited] = useState(favorited);
 
-  function handleFavoriteButtonClick() {
+  function handleFavoriteButtonClick(e) {
+    e.preventDefault();     // evita que o <a> navegue
+    e.stopPropagation();    // evita que o evento suba
     setIsFavorited(!isFavorited);
 
     getWishlistItemById(product.id)
@@ -91,9 +119,16 @@ function FavoriteButton({ product }) {
 
   return (
     <button
+      type="button"
       onClick={handleFavoriteButtonClick}
-      className={`absolute right-1 top-1 cursor-pointer border rounded-full p-2 shadow
-                 ${!isFavorited && 'hover:bg-branding-error transition-colors duration-300 ease-in-out'}`}
+      className="
+        absolute right-2 top-2 
+        p-2 rounded-full border bg-white shadow-sm
+        transition-colors duration-300
+        hover:bg-red-100
+        z-20
+        cursor-pointer
+      "
     >
       <img
         src={isFavorited ? FavoriteRedIcon : FavoriteDefaultIcon}

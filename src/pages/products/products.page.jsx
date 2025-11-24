@@ -47,16 +47,13 @@ export function ProductsPage() {
             <Container>
                 <div className="my-5">
                     <div className="flex justify-between my-5">
-                        Filtros horizontais
                         <div className="flex gap-1">
                             <p className="text-gray-900 font-bold">{page.total}</p>
                             <p className="text-gray-600">Resultados Encontrados</p>
                         </div>
                     </div>
                     <div className="flex">
-                        <div className="w-[15%]">Filtro Vertical</div>
-
-                        <div className="w-[85%]">
+                        <div className="w-[100%]">
                             <div className="flex flex-wrap gap-5 justify-center">
                                 {products.map(product => (
                                     <ProductCard key={product.id} product={product} size={4} />
