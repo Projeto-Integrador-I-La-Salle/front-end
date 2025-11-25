@@ -1,20 +1,23 @@
-function ProductRowFinalOrder({ image, name, quantity, price }) {
+/**
+ * @param {{ product: ProductType }} props
+ */
+function ProductRowFinalOrder({ product }) {
   return (
     <div>
       <div className="flex justify-between">
         <div className="flex items-center gap-3">
           <img
-            src={image}
-            alt={name}
+            src={product?.imagens?.[0]?.url}
+            alt={product?.nome}
             className="w-14 h-14 rounded-lg object-cover"
           />
           <span className="font-medium text-gray-700">
-            {name} <span className="font-bold">x{quantity}</span>
+            {product?.nome} <span className="font-bold">x{product?.quantidade}</span>
           </span>
         </div>
 
         <div>
-          <span className="font-semibold text-gray-900">R${price}</span>
+          <span className="font-semibold text-gray-900">R${product?.preco}</span>
         </div>
       </div>
     </div>

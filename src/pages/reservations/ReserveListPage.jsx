@@ -1,44 +1,52 @@
+import { Link } from "react-router";
+import Cookies from "js-cookie";
+
+import { removeCartItemById } from "../../services/storage/cart.js";
+
+import { useCartProducts } from "../../hooks/useCartProducts.hook.js";
+
 import TopBar from "../../components/TopBar.jsx";
 import MainHeader from "../../components/MainHeader.jsx";
 import { NavBar } from "../../components/NavBar.jsx";
 import { ProductRowReserve } from "../../components/ProductRowReserve.jsx";
-import luvas from "../../assets/img-luva.webp";
-import capacete from "../../assets/img-capacete.jpg";
-import { ChevronRightIcon, HomeIcon, ArrowRightIcon } from "lucide-react";
-import { useState } from "react";
 import { Footer } from "../../components/Footer.jsx";
-import Cookies from "js-cookie";
+
+import { ChevronRightIcon, HomeIcon, ArrowRightIcon } from "lucide-react";
 
 export function ReserveListPage() {
-  //Lista de produtos para teste de renderização. Posteriormente tera que conectar ao banco.
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      name: "Luvas antederrapante",
-      image: luvas,
-      price: 10.0,
-    },
-    {
-      id: 2,
-      name: "Capacete Escamoteavel",
-      image: capacete,
-      price: 299.0,
-    },
-  ]);
+  const { products, setProducts } = useCartProducts();
 
+  /**
+   * @param {string} id
+   * */
   function removeProduct(id) {
+    if (!id) {
+      throw new Error("Id should not be null or undefined.");
+    }
+
     setProducts((prev) => prev.filter((item) => item.id !== id));
-    console.log(id);
+    removeCartItemById(id);
   }
-  console.log("Products:", products);
 
   function handleContinueOrder() {
-    if (products.length > 0) {
+    if (products?.length > 0) {
       const productIds = products.map((p) => p.id);
       Cookies.set("reserved_products_ids", JSON.stringify(productIds));
       window.location.href = "/checando-pedido";
-    } else {
-      document.alert("Não a produtos em seu carrinho.");
+    }
+  }
+
+  function renderContinueWithOrderButton() {
+    if (products?.length > 0) {
+      return (
+        <button
+          onClick={handleContinueOrder}
+          className="flex items-center gap-2 bg-gray-900 text-white px-6 py-2 rounded-2xl shadow-lg hover:bg-red-600 transition font-semibold">
+          <Link to="/checando-pedido" className="flex gap-2">
+            <span>Continuar com pedido</span> <ArrowRightIcon />
+          </Link>
+        </button>
+      );
     }
   }
 
@@ -64,14 +72,16 @@ export function ReserveListPage() {
           <span>Quantidade</span>
           <span>SubTotal</span>
         </div>
-        {products.length > 0 ? (
-          products.map((props) => (
-            <ProductRowReserve
-              key={props.id}
-              {...props}
-              onRemove={removeProduct}
-            />
-          ))
+        {products && products.length > 0 ? (
+          products.map(function(product) {
+            return (
+              <ProductRowReserve
+                key={product.id}
+                product={product}
+                onRemove={removeProduct}
+              />
+            );
+          })
         ) : (
           <p className="text-center text-gray-500 py-6">
             Adicione produtos na sacola para poder reservar.
@@ -79,13 +89,10 @@ export function ReserveListPage() {
         )}
       </div>
       <div className="flex justify-end items-center w-full max-w-4xl mx-auto mt-10 gap-4">
-        <button
-        onClick={handleContinueOrder} 
-        className="flex items-center gap-2 bg-gray-900 text-white px-6 py-2 rounded-2xl shadow-lg hover:bg-red-600 transition font-semibold">
-          <span>Continuar com pedido</span> <ArrowRightIcon />
-        </button>
+        {renderContinueWithOrderButton()}
       </div>
       <Footer />
     </div>
   );
 }
+

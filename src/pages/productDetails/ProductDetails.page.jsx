@@ -21,6 +21,8 @@ import iconShop from "../../assets/icons/icon-shop-vector.svg";
 import iconFavorite from "../../assets/icons/icon-heart-success-dark-vector.svg";
 import imgUnavailableProduct from "../../assets/img-unavailable-product.webp";
 import { useGetAllProducts } from "../../hooks/getAllProducts.hook";
+import { useModal } from "../../../useModal.hook";
+import { addItemToCart } from "../../services/storage/cart";
 
 export function ProductDetailsPage() {
   /** @type {LoaderData} */
@@ -125,10 +127,23 @@ function ImageSection({ images }) {
  */
 function ProductInfo({ product }) {
   const [currentQuantity, setCurrentQuantity] = useState(1);
+  const { openModal } = useModal();
 
   //const hasReview = process.env.FLG_REVIEW === 'true';
   const hasReview = false;
   const hasSKU = false;
+
+  function handleAddToCardButtonSubmit() {
+    addItemToCart({
+      ...product,
+      quantidade: currentQuantity
+    });
+
+    openModal(
+      <MyCustomModal />,
+      { showCloseButton: true }
+    );
+  }
 
   return (
     <div className="w-[50%] select-none">
@@ -172,7 +187,7 @@ function ProductInfo({ product }) {
           currentQuantity={currentQuantity}
           setCurrentQuantity={setCurrentQuantity}
         />
-        <AddToCartButton handleSubmit={function() { }} />
+        <AddToCartButton handleSubmit={handleAddToCardButtonSubmit} />
         <AddToFavoriteButton handleSubmit={function() { }} />
       </div>
       <SectionIntersection />
@@ -238,3 +253,14 @@ function AddToFavoriteButton({ handleSubmit }) {
     </button>
   );
 }
+
+function MyCustomModal() {
+  return (
+    <div className="p-5 flex flex-col gap-5 text-center">
+      <p>
+        Produto adicionado ao carrinho com sucesso!
+      </p>
+    </div>
+  );
+}
+

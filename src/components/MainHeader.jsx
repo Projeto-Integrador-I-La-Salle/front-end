@@ -29,7 +29,7 @@ function MainHeader() {
         <a href="/desejos">
           <Heart className="cursor-pointer hover:text-red-600" size={22} />
         </a>
-        <a href="/reservas" className="relative flex items-center gap-2 cursor-pointer">
+        <a href="/carrinho-reservas" className="relative flex items-center gap-2 cursor-pointer">
           <ShoppingBag size={22} className="hover:text-red-600" />
           <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
 

@@ -11,7 +11,7 @@ function TopBar() {
 
       {/* Idioma, Moeda, Login */}
       <div className="flex items-center gap-4 text-gray-600">
-        <span className="cursor-pointer hover:text-red-600">Sign In / Sign Up</span>
+        <span className="cursor-pointer hover:text-red-600">Login / Cadastre-se</span>
       </div>
     </div>
   );

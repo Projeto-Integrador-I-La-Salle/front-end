@@ -5,37 +5,22 @@ import { NavBar } from "../../components/NavBar";
 import { InputBox } from "../../components/inputBox";
 import { TypographyHeading } from "../../components/typography/TypographyHeading.component";
 import { ProductRowFinalOrder } from "../../components/ProductRowFinalOrder";
-import luvas from "../../assets/img-luva.webp";
-import capacete from "../../assets/img-capacete.jpg";
 import { PaymentMethod } from "../../components/PaymentMethod";
 import { SectionPage } from "../../components/SectionPage";
 import { Footer } from "../../components/Footer";
 import { useState } from "react";
+import { useCartProducts } from "../../hooks/useCartProducts.hook";
 
 export function CheckOrderPage() {
-  const products = [
-    {
-      id: 1,
-      name: "Luvas antederrapante",
-      image: luvas,
-      quantity: 2,
-      price: 10.0,
-    },
-    {
-      id: 2,
-      name: "Capacete Escamoteavel",
-      image: capacete,
-      quantity: 1,
-      price: 299.0,
-    },
-  ];
+  const { products } = useCartProducts();
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [contact, setContact] = useState("");
   const [retrievalDate, setRetrievalDate] = useState("");
   const [orderNotes, setOrderNotes] = useState("");
 
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
 
     const formData = {
@@ -45,13 +30,11 @@ export function CheckOrderPage() {
       retrievalDate,
       orderNotes,
     };
-
-    console.log("Form Data:", formData);
   };
 
   function calculateTotalPriceWithQuantity() {
-    const total = products.reduce((accumulator, currentProduct) => {
-      const itemTotal = currentProduct.price * currentProduct.quantity;
+    const total = products.reduce(function(accumulator, currentProduct) {
+      const itemTotal = currentProduct.preco * currentProduct.quantidade;
       return accumulator + itemTotal;
     }, 0);
     return total;
@@ -135,7 +118,7 @@ export function CheckOrderPage() {
                   name="order-notes"
                   rows="5"
                   className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-red-500 "
-                  placeholder="Ex: Preferencia de retirada tarde"
+                  placeholder="Ex: Preferência de retirada à tarde"
                   value={orderNotes}
                   onChange={(e) => setOrderNotes(e.target.value)}
                 ></textarea>
@@ -146,12 +129,19 @@ export function CheckOrderPage() {
           <div>
             <div className="bg-white border border-gray-100 rounded-md p-8 w-full max-w-sm">
               <TypographyHeading weight={500} variation={5}>
-                Summery
+                Sumário
               </TypographyHeading>
               <div className="mt-5">
-                {products.map((props) => (
-                  <ProductRowFinalOrder key={props.id} {...props} />
-                ))}
+                {products && products.length > 0 &&
+                  products.map(function(product) {
+                    return (
+                      <ProductRowFinalOrder
+                        key={product.id}
+                        product={product}
+                      />
+                    );
+                  })
+                }
               </div>
 
               <div className="mt-5 mb-5 border-b border-gray-300"></div>
@@ -178,3 +168,4 @@ export function CheckOrderPage() {
     </div>
   );
 }
+
