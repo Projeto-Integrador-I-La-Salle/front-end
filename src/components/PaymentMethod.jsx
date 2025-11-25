@@ -1,48 +1,52 @@
-import { useState } from "react";
+/**
+ * @param {{ selectedMethod: string, setSelectedMethod: React.Dispatch<string>}} props
+ */
+function PaymentMethod({ selectedMethod, setSelectedMethod }) {
+  const paymentMethods = [
+    {
+      id: 1,
+      label: "Dinheiro",
+      value: "dinheiro"
+    },
+    {
+      id: 2,
+      label: "Pix",
+      value: "pix"
+    },
+    {
+      id: 3,
+      label: "Cartão Crédito / Débito",
+      value: "cartao"
+    }
+  ];
 
-const PaymentMethod = () => {
-  const [selectedMethod, setSelectedMethod] = useState("cashOnShop");
+  function handleChange(e) {
+    setSelectedMethod(e.target.value)
+  }
 
   return (
     <div>
       <h2 className="font-semibold mb-4">Método de Pagamento </h2>
 
       <div className="space-y-4">
-        <label className="flex items-center space-x-2 cursor-pointer">
-          <input
-            type="radio"
-            name="paymentMethod"
-            value="cashOnShop"
-            checked={selectedMethod === "cashOnShop"}
-            onChange={(e) => setSelectedMethod(e.target.value)}
-            className="accent-red-500"
-          />
-          <span>Dinheiro</span>
-        </label>
-
-        <label className="flex items-center space-x-2 cursor-pointer">
-          <input
-            type="radio"
-            name="paymentMethod"
-            value="pix"
-            checked={selectedMethod === "pix"}
-            onChange={(e) => setSelectedMethod(e.target.value)}
-            className="accent-red-500"
-          />
-          <span>Pix</span>
-        </label>
-
-        <label className="flex items-center space-x-2 cursor-pointer">
-          <input
-            type="radio"
-            name="paymentMethod"
-            value="Cartão Crédito/Débito"
-            checked={selectedMethod === "Cartão Crédito/Débito"}
-            onChange={(e) => setSelectedMethod(e.target.value)}
-            className="accent-red-500"
-          />
-          <span>Cartão Crédito/Débito</span>
-        </label>
+        {paymentMethods.map(function(paymentMethod) {
+          return (
+            <label
+              key={paymentMethod.id}
+              className="flex items-center space-x-2 cursor-pointer"
+            >
+              <input
+                type="radio"
+                name="paymentMethod"
+                value={paymentMethod.value}
+                checked={selectedMethod === paymentMethod.value}
+                onChange={handleChange}
+                className="accent-red-500"
+              />
+              <span>{paymentMethod.label}</span>
+            </label>
+          );
+        })}
       </div>
     </div>
   );

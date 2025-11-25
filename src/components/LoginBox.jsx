@@ -76,7 +76,7 @@ function LoginBox() {
             />
           </div>
 
-          {error.length > 0 && <p className="text-branding-error">{error}</p>}
+          {error?.length > 0 && <p className="text-branding-error">{error}</p>}
 
           {/* Botão de Login */}
           <button
@@ -97,7 +97,7 @@ function LoginBox() {
         <p className="mt-6 text-sm text-center text-gray-600">
           Não tem uma conta?{" "}
           <a
-            href="#"
+            href="/cadastro"
             className="text-red-600 hover:text-red-800 font-medium"
           >
             Cadastre-se

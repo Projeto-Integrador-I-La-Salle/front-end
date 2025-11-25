@@ -202,7 +202,7 @@ export function EditProductAdminPage() {
 
     return (
         <div className="h-full overflow-hidden bg-gray-50 cursor-default select-none"> {/* 1️⃣ ocupa a tela toda e bloqueia scroll */}
-            <h1 className="p-4">Admin Page</h1>
+            <h1 className="p-4">Página de Administrador</h1>
 
             <div className="flex h-full">
                 <NavigationMenu />

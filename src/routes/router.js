@@ -12,6 +12,8 @@ import { LoaderFallback } from "../../LoaderFallback.jsx";
 import { AboutUsPage } from "../pages/about/AboutUsPage.jsx";
 import { AdminPage } from "../pages/admin/admin.page.jsx";
 import { EditProductAdminPage } from "../pages/admin/screens/editProduct.page.jsx";
+import { OrderHistoryAdminPage } from "../pages/admin/screens/OrderHistory.page.jsx";
+import { OrderDetailsAdminPage } from "../pages/admin/screens/OrderDetails.page.jsx";
 
 
 export const router = createBrowserRouter([
@@ -63,6 +65,14 @@ export const router = createBrowserRouter([
   {
     path: "/admin/produtos/:id",
     Component: EditProductAdminPage,
+  },
+  {
+    path: "/admin/pedidos/historico",
+    Component: OrderHistoryAdminPage
+  },
+  {
+    path: "/admin/pedidos/:id",
+    Component: OrderDetailsAdminPage
   }
 ]);
 

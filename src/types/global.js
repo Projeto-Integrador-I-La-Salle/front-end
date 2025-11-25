@@ -55,3 +55,41 @@
  * @property {boolean} active
  */
 
+
+/**
+ * @typedef OrderHistory
+ * @property {Number} id
+ * @property {Date} dataReserva
+ * @property {Date} dataRetirada
+ * @property {String| null} observacao
+ * @property {String} status
+ * @property {Number} valorTotal
+ * @property {String} metodoPagamento
+ * @property {Array<OrderHistoryItem>} itens
+ */
+
+
+/**
+ * @typedef OrderHistoryItem
+ * @property {Number} id
+ * @property {ProductType} produto
+ * @property {Number} quantidade
+ */
+
+
+/**
+ * @typedef CreateOrderRequest
+ * @property {string | null} observacao
+ * @property {string} metodo_pagamento
+ * @property {string} telefone_contato
+ * @property {Date} data_retirada
+ * @property {Array<CreateOrderRequestItens>} itens
+ */
+
+
+/**
+ * @typedef CreateOrderRequestItens
+ * @property {number} id_produto
+ * @property {number} quantidade
+ */
+

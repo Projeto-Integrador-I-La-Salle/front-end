@@ -8,8 +8,11 @@ import { ProductRowFinalOrder } from "../../components/ProductRowFinalOrder";
 import { PaymentMethod } from "../../components/PaymentMethod";
 import { SectionPage } from "../../components/SectionPage";
 import { Footer } from "../../components/Footer";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useCartProducts } from "../../hooks/useCartProducts.hook";
+import { create } from "../../api/orders.api";
+import { useModal } from "../../../useModal.hook";
+import { LoaderContext } from "../../contexts/LoaderContext";
 
 export function CheckOrderPage() {
   const { products } = useCartProducts();
@@ -19,17 +22,59 @@ export function CheckOrderPage() {
   const [contact, setContact] = useState("");
   const [retrievalDate, setRetrievalDate] = useState("");
   const [orderNotes, setOrderNotes] = useState("");
+  const [selectedMethod, setSelectedMethod] = useState("cashOnShop");
 
-  function handleSubmit(e) {
+  const { setIsLoading } = useContext(LoaderContext);
+  const { openModal } = useModal();
+
+  async function handleSubmit(e) {
     e.preventDefault();
 
-    const formData = {
-      firstName,
-      lastName,
-      contact,
-      retrievalDate,
-      orderNotes,
-    };
+    setIsLoading(true);
+
+    try {
+      /**
+       * @type CreateOrderRequest 
+       * */
+      const req = {
+        data_retirada: new Date(retrievalDate).toISOString(),
+        observacao: orderNotes || null,
+        metodo_pagamento: selectedMethod,
+        itens: products?.map(function(product) {
+          return {
+            id_produto: product.id,
+            quantidade: product.quantidade
+          };
+        })
+      };
+
+      const res = await create(req);
+
+      if (res.statusCode === 201) {
+        return openModal(
+          <SuccessModal idReserva={res.data.reserva.id_reserva} />,
+          { showCloseButton: true }
+        );
+      }
+
+      if (res.statusCode >= 400 && res.statusCode <= 499) {
+        return openModal(
+          <ErrorModal error={res.data} />,
+          { showCloseButton: true }
+        );
+      }
+
+      if (res.statusCode >= 500) {
+        return openModal(
+          <ErrorModal error={res.data} />,
+          { showCloseButton: true }
+        );
+      }
+    } catch (err) {
+      console.error("[ERROR]: An error has ocurred, ", err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   function calculateTotalPriceWithQuantity() {
@@ -92,6 +137,7 @@ export function CheckOrderPage() {
                   </label>
                   <input
                     type="date"
+                    required={true}
                     value={retrievalDate}
                     onChange={(e) => setRetrievalDate(e.target.value)}
                     className="w-full px-4 py-2 border text-gray-500 border-gray-100 rounded-md focus:ring-1 focus:ring-red-500 focus:border-red-500 outline-none"
@@ -150,7 +196,10 @@ export function CheckOrderPage() {
                 <span>R${calculateTotalPriceWithQuantity()}</span>
               </div>
               <div className="mt-5">
-                <PaymentMethod />
+                <PaymentMethod
+                  selectedMethod={selectedMethod}
+                  setSelectedMethod={setSelectedMethod}
+                />
               </div>
               <div>
                 <button
@@ -165,6 +214,29 @@ export function CheckOrderPage() {
         </div>
       </form>
       <Footer />
+    </div>
+  );
+}
+
+function ErrorModal({ error }) {
+  return (
+    <div className="p-5 flex flex-col gap-5 text-center">
+      <p>
+        {error}
+      </p>
+    </div>
+  );
+}
+
+/**
+ * @param {number} props
+ * */
+function SuccessModal({ idReserva }) {
+  return (
+    <div className="p-5 flex flex-col gap-5 text-center">
+      <p>
+        Reserva realizada com sucesso! Código do pedido # {idReserva}
+      </p>
     </div>
   );
 }

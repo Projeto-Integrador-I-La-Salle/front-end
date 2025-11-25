@@ -3,9 +3,17 @@ import fundo from "../../assets/bg-loja.jpg";
 import TopBar from "../../components/TopBar.jsx";
 import MainHeader from "../../components/MainHeader.jsx";
 import { NavBar } from "../../components/NavBar.jsx";
-import {Footer} from "../../components/Footer.jsx"
+import { Footer } from "../../components/Footer.jsx"
+import { useContext, useEffect } from "react";
+import { LoaderContext } from "../../contexts/LoaderContext.jsx";
 
 function LoginPage() {
+  const { setIsLoading } = useContext(LoaderContext);
+
+  useEffect(function() {
+    setIsLoading(false);
+  }, [setIsLoading]);
+
   return (
     <div>
       <TopBar />
@@ -23,7 +31,7 @@ function LoginPage() {
           <LoginBox />
         </div>
       </div>
-      <Footer />  
+      <Footer />
     </div>
   );
 }

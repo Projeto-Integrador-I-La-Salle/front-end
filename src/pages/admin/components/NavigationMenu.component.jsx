@@ -5,7 +5,9 @@ export function NavigationMenu() {
         {
             label: 'Pedidos',
             expanded: false,
-            subsections: []
+            subsections: [
+                { label: 'Histórico', 'href': '/admin/pedidos/historico' },
+            ]
         },
         {
             label: 'Produtos',

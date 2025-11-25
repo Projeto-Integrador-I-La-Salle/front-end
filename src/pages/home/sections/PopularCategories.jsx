@@ -22,6 +22,21 @@ export function PopularCategories() {
             label: 'Pneus',
             image: imgCapacete
         },
+        {
+            id: 5,
+            label: 'Luvas',
+            image: imgCapacete
+        },
+        {
+            id: 6,
+            label: 'Jaquetas',
+            image: imgCapacete
+        },
+        {
+            id: 7,
+            label: 'Protetores',
+            image: imgCapacete
+        }
     ];
 
     return (

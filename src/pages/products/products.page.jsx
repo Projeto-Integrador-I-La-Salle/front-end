@@ -25,7 +25,7 @@ export function ProductsPage() {
 
     useEffect(function() {
         window.scrollTo({
-            top: 500,
+            top: 0,
             behavior: "smooth"
         });
         getAll({ pageNumber, pageSize });

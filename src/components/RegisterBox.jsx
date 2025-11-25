@@ -8,10 +8,15 @@ function RegisterBox() {
   const [emailForm, setEmailForm] = useState({ value: '', error: null });
   const [passwordForm, setPasswordForm] = useState({ value: '', error: null });
   const [contactForm, setContactForm] = useState({ value: '', error: null });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    setLoading(true);
 
     const data = {
       name: nameForm.value,
@@ -23,16 +28,17 @@ function RegisterBox() {
     // TODO: error handling.
     const res = await register(data);
 
-    if (res.status === 422) {
-      console.error(res);
+    if (res.hasError) {
+      setError(res.data);
+      setLoading(false);
       return;
     }
 
-    if (res.status === 201) {
+    if (res.statusCode === 201) {
+      setLoading(false);
       alert(res.data?.message || "Usuário registrado com sucesso!");
       navigate("/");
     }
-
   }
 
   return (
@@ -108,11 +114,18 @@ function RegisterBox() {
               onChange={setContactForm}
             />
           </div>
+          {error?.length > 0 && <p className="text-branding-error">{error}</p>}
           <button
             type="submit"
+            disabled={loading}
             className="w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-xl font-semibold shadow-md transition duration-300"
           >
-            Enviar
+            <span className="pr-1">{loading ? "Carregando" : "Cadastrar-se"}</span>
+            {loading && (
+              <span
+                className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"
+              />
+            )}
           </button>
         </form>
       </div>
